@@ -9,7 +9,7 @@
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
-    <nitmproxy.version>1.2.2-SNAPSHOT</nitmproxy.version>
+    <nitmproxy.version>1.3.0</nitmproxy.version>
   </properties>
   <dependencies>
     <dependency>
