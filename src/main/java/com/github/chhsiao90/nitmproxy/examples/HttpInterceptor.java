@@ -5,6 +5,7 @@ import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 import static io.netty.buffer.Unpooled.copiedBuffer;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import com.github.chhsiao90.nitmproxy.ConnectionContext;
 import com.github.chhsiao90.nitmproxy.NitmProxyConfig;
 import com.github.chhsiao90.nitmproxy.handler.protocol.http2.Http2FramesWrapper;
 import com.github.chhsiao90.nitmproxy.listener.HttpListener;
@@ -27,7 +28,8 @@ public class HttpInterceptor {
 
   private static class Interceptor implements HttpListener {
     @Override
-    public Optional<FullHttpResponse> onHttp1Request(FullHttpRequest request) {
+    public Optional<FullHttpResponse> onHttp1Request(ConnectionContext connectionContext,
+        FullHttpRequest request) {
       if (request.method() == HttpMethod.CONNECT) {
         return Optional.empty();
       }
@@ -35,7 +37,8 @@ public class HttpInterceptor {
     }
 
     @Override
-    public Optional<Http2FramesWrapper> onHttp2Request(Http2FramesWrapper request) {
+    public Optional<Http2FramesWrapper> onHttp2Request(ConnectionContext connectionContext,
+        Http2FramesWrapper request) {
       return Optional.of(Http2FramesWrapper.builder(request.getStreamId())
           .response(createResponse())
           .build());
