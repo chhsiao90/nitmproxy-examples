@@ -11,7 +11,7 @@ public class UnsafeAccess {
 
     NitmProxyConfig config = new NitmProxyConfig();
     config.setUnsafeAccessSupport(unsafeAccessSupport);
-    config.setHttpListeners(ImmutableList.of(unsafeAccessSupport.getInterceptor()));
+    config.setListeners(ImmutableList.of(unsafeAccessSupport::getInterceptor));
     Bootstrap.start(config);
   }
 }

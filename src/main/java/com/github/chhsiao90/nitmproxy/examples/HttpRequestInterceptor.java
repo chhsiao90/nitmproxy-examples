@@ -8,7 +8,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import com.github.chhsiao90.nitmproxy.ConnectionContext;
 import com.github.chhsiao90.nitmproxy.NitmProxyConfig;
 import com.github.chhsiao90.nitmproxy.handler.protocol.http2.Http2FramesWrapper;
-import com.github.chhsiao90.nitmproxy.listener.HttpListener;
+import com.github.chhsiao90.nitmproxy.listener.NitmProxyListener;
 import com.google.common.collect.ImmutableList;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -18,15 +18,15 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import java.util.Optional;
 
-public class HttpInterceptor {
+public class HttpRequestInterceptor {
 
   public static void main(String[] args) throws Exception {
     NitmProxyConfig config = new NitmProxyConfig();
-    config.setHttpListeners(ImmutableList.of(new Interceptor()));
+    config.setListeners(ImmutableList.of(Interceptor::new));
     Bootstrap.start(config);
   }
 
-  private static class Interceptor implements HttpListener {
+  private static class Interceptor implements NitmProxyListener {
     @Override
     public Optional<FullHttpResponse> onHttp1Request(ConnectionContext connectionContext,
         FullHttpRequest request) {
